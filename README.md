@@ -1,1 +1,1 @@
-# vm-management-dashboard
+vm-management-dashboard is a Python backend application designed to streamline the management of virtual machines. It serves as the primary entry point for administrators seeking to control VM operations efficiently. Utilizing Flask, this project offers a robust framework for configuring routes, ensuring seamless virtual machine management. Additionally, it integrates necessary middleware to enhance functionality and security, making it an essential tool for VM administration.
