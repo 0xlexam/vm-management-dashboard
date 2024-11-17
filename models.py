@@ -11,46 +11,46 @@ class VMStatus(Enum):
     DELETED = "deleted"
 
 class VirtualMachine:
-    def __init__(self, id, name, cpu_cores, memory_gb, disk_gb, status):
-        self.id = id
-        self.name = name
+    def __init__(self, vm_id, vm_name, cpu_cores, memory_gb, storage_gb, status):
+        self.id = vm_id
+        self.name = vm_name
         self.cpu_cores = cpu_cores
         self.memory_gb = memory_gb
-        self.disk_gb = disk_gb
+        self.storage_gb = storage_gb
         self.status = VMStatus(status)
 
-    def update_status(self, new_status):
+    def set_status(self, new_status):
         self.status = VMStatus(new_status)
 
     def __str__(self):
         return f"VM {self.id}: {self.name}, Status: {self.status.name}"
 
-class VMManager:
+class VirtualMachineManager:
     def __init__(self):
-        self.vms = {}
+        self.virtual_machines = {}
 
-    def create_vm(self, id, name, cpu_cores, memory_gb, disk_gb, status=VMStatus.STOPPED):
-        if id in self.vms:
-            raise ValueError(f"VM with ID {id} already exists.")
-        self.vms[id] = VirtualMachine(id, name, cpu_cores, memory_gb, disk_gb, status)
+    def add_virtual_machine(self, vm_id, vm_name, cpu_cores, memory_gb, storage_gb, status=VMStatus.STOPPED):
+        if vm_id in self.virtual_machines:
+            raise ValueError(f"VM with ID {vm_id} already exists.")
+        self.virtual_machines[vm_id] = VirtualMachine(vm_id, vm_name, cpu_cores, memory_gb, storage_gb, status)
 
-    def delete_vm(self, id):
-        if id in self.vms:
-            del self.vms[id]
+    def remove_virtual_machine(self, vm_id):
+        if vm_id in self.virtual_machines:
+            del self.virtual_machines[vm_id]
         else:
-            raise ValueError(f"No VM with ID {id} found.")
+            raise ValueError(f"No VM with ID {vm_id} found.")
 
-    def get_vm_status(self, id):
-        if id in self.vms:
-            return self.vms[id].status
+    def fetch_vm_status(self, vm_id):
+        if vm_id in self.virtual_machines:
+            return self.virtual_machines[vm_id].status
         else:
-            raise ValueError(f"No VM with ID {id} found.")
+            raise ValueError(f"No VM with ID {vm_id} found.")
 
-    def update_vm_status(self, id, new_status):
-        if id in self.vms:
-            self.vms[id].update_status(new_status)
+    def change_vm_status(self, vm_id, new_status):
+        if vm_id in self.virtual_machines:
+            self.virtual_machines[vm_id].set_status(new_status)
         else:
-            raise ValueError(f"No VM with ID {id} found.")
+            raise ValueError(f"No VM with ID {vm_id} found.")
 
-    def list_vms(self):
-        return [str(vm) for id, vm in self.vms.items()]
+    def display_vm_list(self):
+        return [str(vm) for vm_id, vm in self.virtual_machines.items()]
